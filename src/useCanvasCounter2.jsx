@@ -31,7 +31,8 @@ const useCanvasCounter = ({
     const listener = () => {
         if (curStateRef.current > 0) {
             setCounterState(curStateRef.current - 1);
-        } else {
+        } 
+        else {
             clearInterval(timer.current);
         }
     };
@@ -49,7 +50,6 @@ const useCanvasCounter = ({
             ctx.fill();
         }
         
-
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, canvasCircle.current);
         ctx.lineWidth = lineWidth;
