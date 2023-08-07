@@ -16,6 +16,7 @@ const useCanvasCounter = ({
     displayCounter,
     textColor,
     canvasName,
+    displayInsideCircle,
 }) => {
     const [counter, setCounter] = useState(COUNT);
     const [start, setStart] = useState(false);
@@ -37,13 +38,17 @@ const useCanvasCounter = ({
 
     useEffect(() => {
         let canvas = document.getElementById(canvasName);
+        const ctx = canvas.getContext('2d');       
+        
 
-        const ctx = canvas.getContext('2d');
         ctx.reset();
         ctx.beginPath();
         ctx.arc(x, y, radius + lineWidth / 2, 0, DOUBLE_PI);
         ctx.fillStyle = fillColor;
-        ctx.fill();
+        if(displayInsideCircle){
+            ctx.fill();
+        }
+        
 
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, canvasCircle.current);
@@ -56,6 +61,8 @@ const useCanvasCounter = ({
         ctx.stroke();
 
         ctx.font = '16px serif';
+
+        ctx.globalApha = 0.3
         ctx.fillStyle = `hsl(${hue}, ${strokeColor.sat}, ${strokeColor.light})`;
         let translateX = 5;
         if (counter < 950) {
@@ -70,6 +77,8 @@ const useCanvasCounter = ({
         if (start) {
             canvasCircle.current = canvasCircle.current - canvasCircle.current / curStateRef.current;
         }
+
+        
     }, [counter]);
 
     useEffect(() => {
